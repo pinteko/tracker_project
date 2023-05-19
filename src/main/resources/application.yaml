@@ -1,1 +1,22 @@
-
+server:
+  port: 8189
+  servlet:
+    context-path: /app
+spring:
+  config:
+    location: secret
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tracker
+    username: postgres
+#      secret: db.username
+    password: berbedos31
+#      secret: db.password
+    driver-class-name: org.postgresql.Driver
+    jpa:
+      database: postgresql
+      database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+      show-sql: true
+      hibernate:
+        ddl-auto: validate
+    flyway:
+      baseline-on-migrate: true
