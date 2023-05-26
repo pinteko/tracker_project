@@ -19,42 +19,42 @@ public class HabitController {
     private final HabitService service;
 
     @PostMapping()
-    public ResponseEntity<HabitDto> postHabit(@RequestBody HabitDto requestBody){
+    public HabitDto postHabit(@RequestBody HabitDto requestBody){
         return service.postHabit(requestBody);
     }
 
     @GetMapping("/update")
-    public ResponseEntity <HabitDto> getUpdateHabit(@RequestParam String name, @RequestParam String username){
+    public HabitDto getUpdateHabit(@RequestParam String name, @RequestParam String username){
         return service.getHabit(name, username);
     }
 
     @PutMapping("/update")
-    public ResponseEntity <HabitDto> putUpdateHabit(@RequestBody HabitDto requestBody){
+    public HabitDto putUpdateHabit(@RequestBody HabitDto requestBody){
         return service.putHabit(requestBody);
     }
     @PutMapping("/add")
-    public ResponseEntity <HabitDto> addHabitToMyList(@RequestParam String name, @RequestParam String username){
+    public HabitDto addHabitToMyList(@RequestParam String name, @RequestParam String username){
         return service.addHabitToMyList(name, username);
     }
 
 
     @GetMapping()
-    public ResponseEntity <List<HabitDto>> getAllHabit(){
+    public List<HabitDto> getAllHabit(){
         return service.getHabits();
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<List<HabitDto>> getAllHabitForUser(@PathVariable("username") String username){
+    public List<HabitDto> getAllHabitForUser(@PathVariable("username") String username){
         return service.getHabitsForUser(username);
     }
 
     @DeleteMapping()
-    public ResponseEntity <Void> deleteHabitFromUser (@RequestParam Long habitId, @RequestParam String username){
-        return service.deleteHabit(habitId, username);
+    public void deleteHabitFromUser (@RequestParam Long habitId, @RequestParam String username){
+        service.deleteHabit(habitId, username);
     }
 
     @DeleteMapping("/bulk/")
-    public ResponseEntity <Void> deleteAllHabits (@RequestParam("userId") Long userId){
-        return service.deleteAllHabits(userId);
+    public void deleteAllHabits (@RequestParam("userId") Long userId){
+        service.deleteAllHabits(userId);
     }
 }

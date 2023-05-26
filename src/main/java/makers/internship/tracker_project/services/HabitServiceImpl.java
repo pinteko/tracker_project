@@ -3,13 +3,11 @@ package makers.internship.tracker_project.services;
 import lombok.RequiredArgsConstructor;
 import makers.internship.tracker_project.converters.HabitConverter;
 import makers.internship.tracker_project.dto.HabitDto;
-import makers.internship.tracker_project.dto.HabitRequest;
 import makers.internship.tracker_project.entities.Habit;
 import makers.internship.tracker_project.entities.User;
 import makers.internship.tracker_project.exceptions.ExistEntityException;
 import makers.internship.tracker_project.exceptions.ResourceNotFoundException;
 import makers.internship.tracker_project.repositories.HabitRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +29,7 @@ public class HabitServiceImpl implements HabitService{
 
     @Transactional
     @Override
-    public ResponseEntity<HabitDto> postHabit(HabitDto requestBody) {
+    public HabitDto postHabit(HabitDto requestBody) {
         Habit habit = habitRepository.findFirstByName(requestBody.getName());
         if (habit == null) {
             Habit newHabit = Habit.builder()
@@ -46,69 +44,65 @@ public class HabitServiceImpl implements HabitService{
                     .done(false)
                     .build();
             habitRepository.saveAndFlush(newHabit);
-            return ResponseEntity.ok(converter.entityToDto(newHabit));
+            return converter.entityToDto(newHabit);
         }
         else {
-            return ResponseEntity.ok(converter.entityToDto(habit));
+            return converter.entityToDto(habit);
         }
     }
 
     @Transactional
     @Override
-    public ResponseEntity<List<HabitDto>> getHabits() {
+    public List<HabitDto> getHabits() {
         List<String> names = habitRepository.getAllHabitNames();
         List<Habit> habits = new ArrayList<>();
         for (String name : names) {
             habits.add(habitRepository.findFirstByName(name));
         }
-        return ResponseEntity.ok(habits.stream().map(converter::entityToDto).collect(Collectors.toList()));
+        return habits.stream().map(converter::entityToDto).collect(Collectors.toList());
     }
 
     @Transactional
     @Override
-    public ResponseEntity<HabitDto> getHabit(String name, String username) {
+    public HabitDto getHabit(String name, String username) {
        User user = userService.findByUsername(username).orElseThrow(()-> new ExistEntityException("user not found"));
        Habit habit = habitRepository.getHabitByNameAndUser(name, user);
-        return ResponseEntity.ok(converter.entityToDto(habit));
+        return converter.entityToDto(habit);
     }
 
     @Transactional
     @Override
-    public ResponseEntity<List<HabitDto>> getHabitsForUser(String username) {
+    public List<HabitDto> getHabitsForUser(String username) {
         User user = userService.findByUsername(username)
                 .orElseThrow(()-> new ExistEntityException("user not found"));
-        return ResponseEntity.ok(user.getHabits()
-               .stream().map(converter::entityToDto).collect(Collectors.toList()));
+        return user.getHabits().stream().map(converter::entityToDto).collect(Collectors.toList());
     }
 
     @Override
-    public ResponseEntity<HabitDto> putHabit(HabitDto requestBody) {
-            return ResponseEntity.ok(converter.entityToDto(updateHabit(requestBody)));
+    public HabitDto putHabit(HabitDto requestBody) {
+            return converter.entityToDto(updateHabit(requestBody));
     }
 
     @Transactional
     @Override
-    public ResponseEntity<Void> deleteHabit(Long habitId, String username) {
+    public void deleteHabit(Long habitId, String username) {
         User user = userService.findByUsername(username).orElseThrow(()-> new ExistEntityException("user not found"));
         Set<Habit> list = habitRepository.findAllByUser(user).orElseThrow(() -> new ResourceNotFoundException("data not found"));
         Habit habit = habitRepository.findById(habitId).orElseThrow(() -> new ResourceNotFoundException("data not found"));
         if (list.remove(habit)) {
             user.setHabits(list);
             userService.updateUser(user);
-            return ResponseEntity.ok().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
     @Override
-    public ResponseEntity<Void> deleteAllHabits(Long userId) {
+    public void deleteAllHabits(Long userId) {
         habitRepository.deleteAllByUser(userService.findById(userId));
         habitRepository.flush();
-        return ResponseEntity.ok().build();
     }
     @Transactional
     @Override
-    public ResponseEntity<HabitDto> addHabitToMyList(String name, String username) {
+    public HabitDto addHabitToMyList(String name, String username) {
         User user = userService.findByUsername(username).orElseThrow(()-> new ExistEntityException("user not found"));
         Habit habit = habitRepository.getHabitByNameAndUser(name, user);
         if (habit == null) {
@@ -118,10 +112,10 @@ public class HabitServiceImpl implements HabitService{
             habitDto.setDateStart(LocalDate.now());
             habitDto.setDateDone(LocalDate.now().plusDays(30));
             postHabit(habitDto);
-            return ResponseEntity.ok(converter.entityToDto(newHabit));
+            return converter.entityToDto(newHabit);
         }
         else {
-            return ResponseEntity.ok(converter.entityToDto(habit));
+            return converter.entityToDto(habit);
         }
     }
 
@@ -140,7 +134,6 @@ public class HabitServiceImpl implements HabitService{
     private void checkHabits(Long userId) {
         Set<Habit> list = habitRepository.findAllByUser(userService.findById(userId))
                 .orElseThrow(() -> new ResourceNotFoundException("data not found"));
-
         for (Habit habit : list) {
             if(habit.getCurrentQuantity() >= habit.getMaxQuantity()){
                 habit.setDone(true);
