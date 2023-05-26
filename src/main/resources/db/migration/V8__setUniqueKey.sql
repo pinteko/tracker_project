@@ -1,0 +1,1 @@
+alter table habits add constraint UQ_habit_user unique(name, user_id);

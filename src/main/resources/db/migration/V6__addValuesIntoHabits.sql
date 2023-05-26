@@ -1,0 +1,1 @@
+update habits set done = false where id <= 4;

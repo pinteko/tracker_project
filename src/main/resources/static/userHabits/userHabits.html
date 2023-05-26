@@ -1,0 +1,78 @@
+<div class="container" ng-controller="userHabitController">
+    <h3>All my habits</h3>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>№</td>
+            <td>Name</td>
+            <td>Tag</td>
+            <td>Frequency</td>
+            <td>Current</td>
+            <td>Goal</td>
+            <td>Start</td>
+            <td>Finish</td>
+            <td>Success</td>
+            <td>Update</td>
+            <td>Delete</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="s in userHabitList">
+            <td>{{$index + 1}}</td>
+            <td>{{s.name}}</td>
+            <td>{{s.tag}}</td>
+            <td>{{s.frequency}}</td>
+            <td>{{s.currentQuantity}}</td>
+            <td>{{s.maxQuantity}}</td>
+            <td>{{s.dateStart}}</td>
+            <td>{{s.dateDone}}</td>
+            <td>{{s.done}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="showUpdatePage(s.name)">Update</button>
+            </td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteHabit(s.id)">Delete</button>
+            </td>
+        </tbody>
+    </table>
+    <div>
+        <br>
+        <h4>Add own habit</h4>
+    </div>
+    <form class="container" ng-submit="addHabit()">
+        <div class="input-group">
+            <span class="input-group-text">Name</span>
+            <input type="text" aria-label="Name"
+                   ng-model="newHabit.name" placeholder="Name" class="form-control">
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Tag</span>
+            <input type="text" aria-label="Tag"
+                   ng-model="newHabit.tag" placeholder="Tag" class="form-control">
+        </div>
+        <div class="input-group">
+<!--            <span class="input-group-text">Frequency</span>-->
+<!--            <input type="text" aria-label="Frequency"-->
+<!--                   ng-model="newHabit.frequency" placeholder="Frequency" class="form-control">-->
+            <span class="input-group-text" id="frequency">Frequency</span>
+            <select class="form-select" aria-label="Default select example" ng-model="newHabit.frequency">
+                <option value="DAILY">DAILY</option>
+                <option value="WEEKLY">WEEKLY</option>
+                <option value="BIWEEKLY">BIWEEKLY</option>
+                <option value="TRIWEEKLY">TRIWEEKLY</option>
+                <option value="MONTHLY">MONTHLY</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Quantity</span>
+            <input type="number" aria-label="Quantity"
+                   ng-model="newHabit.maxQuantity" placeholder="Quantity" class="form-control">
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Date start and date end</span>
+            <input type="datetime-local" aria-label="Start"
+                   ng-model="newHabit.dateStart" placeholder="30.12.1999" class="form-control">
+            <input type="datetime-local" aria-label="End"
+                   ng-model="newHabit.dateDone" placeholder="31.12.1999" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>

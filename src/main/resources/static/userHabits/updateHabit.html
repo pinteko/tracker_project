@@ -1,0 +1,43 @@
+<div class="container">
+<form ng-submit="updateHabit()">
+    <h3>Enter the book details</h3>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="name">Name</span>
+        <input type="text" class="form-control"
+               ng-model="upHabit.name" placeholder="$upHabit.name" aria-label="Name" />
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="tag">Tag</span>
+        <input type="text" class="form-control" ng-value="upHabit.tag"
+               ng-model="upHabit.tag" aria-label="Tag" />
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="frequency">Frequency</span>
+        <select class="form-select" aria-label="Default select example" ng-model="upHabit.frequency">
+            <option value="DAILY">DAILY</option>
+            <option value="WEEKLY">WEEKLY</option>
+            <option value="BIWEEKLY">BIWEEKLY</option>
+            <option value="TRIWEEKLY">TRIWEEKLY</option>
+            <option value="MONTHLY">MONTHLY</option>
+        </select>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="currentQuantity">Current quantity</span>
+        <input type="number" class="form-control"
+               ng-model="upHabit.currentQuantity" placeholder="upHabit.currentQuantity" aria-label="Current quantity" />
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="maxQuantity">Max quantity</span>
+        <input type="number" class="form-control"
+               ng-model="upHabit.maxQuantity" placeholder="upHabit.maxQuantity" aria-label="Current quantity" />
+    </div>
+    <div class="input-group">
+        <span class="input-group-text">Date start and date end</span>
+        <input type="datetime-local" aria-label="Start"
+               ng-model="upHabit.dateStart" placeholder="upHabit.dateStart" class="form-control">
+        <input type="datetime-local" aria-label="End"
+               ng-model="upHabit.dateDone" placeholder="upHabit.dateDone" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary" id="backMain">Update</button>
+</form>
+</div>
