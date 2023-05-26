@@ -1,0 +1,1 @@
+update habits set date_done = date(now()) where id <= 4;

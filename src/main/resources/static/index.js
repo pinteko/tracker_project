@@ -11,17 +11,21 @@
                 controller: 'welcomeController'
             })
             .when('/habits', {
-                templateUrl: 'habits/habit.html',
+                templateUrl: 'habit/habit.html',
                 controller: 'habitController'
+            })
+            .when('/myHabits', {
+                templateUrl: 'userHabits/userHabits.html',
+                controller: 'userHabitController'
             })
             .when('/registration', {
                 templateUrl: 'registration/registration.html',
                 controller: 'registrationController'
             })
-            // .when('/students', {
-            //     templateUrl: 'students.html',
-            //     controller: 'studentsController'
-            // })
+            .when('/updateHabit', {
+                templateUrl: 'userHabits/updateHabit.html',
+                controller: 'updateHabitController'
+            })
             // .when('/orders', {
             //     templateUrl: 'myOrders/orders.html',
             //     controller: 'ordersController'
@@ -68,12 +72,13 @@ angular.module('tracker-front').controller('indexController', function ($rootSco
 
                     $scope.user.username = null;
                     $scope.user.password = null;
+                    $scope.user.email = null;
 
                     // $http.get('http://localhost:8189/app/habit/' + $localStorage.springWebGuestCartId + '/merge')
                     //     .then(function successCallback(response) {
                     //     });
 
-                    $location.path('/');
+                    $location.path('/myHabits');
                 }
             }, function errorCallback(response) {
             });

@@ -19,4 +19,5 @@ spring:
       hibernate:
         ddl-auto: validate
     flyway:
-      baseline-on-migrate: true
+#      baseline-on-migrate: true
+      baselineOnMigrate: true

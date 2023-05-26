@@ -30,8 +30,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#!/settings">Settings</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" ng-show="!isUserLoggedIn()">
                     <a class="nav-link" href="#!/registration">Registration</a>
+                </li>
+                <li class="nav-item" ng-show="isUserLoggedIn()">
+                    <a class="nav-link" href="#!/myHabits">My habits</a>
                 </li>
 
                 <li class="nav-item" ng-show="!isUserLoggedIn()">
@@ -57,13 +60,12 @@
     </nav>
 
     <ng-view></ng-view>
-
     <script src="index.js"></script>
     <script src="registration/registration.js"></script>
-    <script src="habits/habit.js"></script>
+    <script src="habit/habit.js"></script>
     <script src="welcome/welcome.js"></script>
-<!--    <script src="myCart/cart.js"></script>-->
-<!--    <script src="myOrders/orders.js"></script>-->
+    <script src="userHabits/userHabits.js"></script>
+    <script src="userHabits/updateHabit.js"></script>
 <!--    <script src="aspect/workingTime.js"></script>-->
 </div>
 

@@ -1,42 +1,56 @@
 package makers.internship.tracker_project.entities;
 
-import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.*;
+import makers.internship.tracker_project.enums.Frequency;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
 @Table(name = "habits")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Habit {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name="name")
     private String name;
 
-    @Column(name = "description")
-    private String description;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "goal")
-    private Integer goal;
+    @Column(name="tag")
+    private String tag;
 
-    @Column(name = "rate")
-    private Date rate;
+    @Column(nullable = false, name="max_quantity")
+    private Integer maxQuantity;
 
-    @CreationTimestamp
-    @Column(name = "start")
-    private LocalDateTime start;
+    @Column(nullable = false, name="frequency")
+    @Enumerated(value=EnumType.STRING)
+    private Frequency frequency;
 
-    @UpdateTimestamp
-    @Column(name = "update")
-    private LocalDateTime update;
+    @Column(nullable = false, name="current_quantity")
+    private Integer currentQuantity;
 
-    @UpdateTimestamp
-    @Column(name = "finish")
-    private LocalDateTime finish;
+    @Column(name="date_start")
+    private LocalDate dateStart;
+
+    @Column(name="date_done")
+    private LocalDate dateDone;
+
+    @Column(nullable = false, name = "done")
+    private boolean done;
+
+    @Override
+    public String toString() {
+        return "Habit: " + name + ". " + tag;
+    }
 }

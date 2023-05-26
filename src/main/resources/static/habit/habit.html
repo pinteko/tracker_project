@@ -1,0 +1,22 @@
+<div class="container" ng-controller="habitController">
+    <h3>All habits</h3>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>№</td>
+            <td>Name</td>
+            <td>Tag</td>
+            <td>Frequency</td>
+            <td>Do</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="s in habitList">
+            <td>{{$index + 1}}</td>
+            <td>{{s.name}}</td>
+            <td>{{s.tag}}</td>
+            <td>{{s.frequency}}</td>
+            <td>
+                <button class="btn btn-danger" ng-show="isUserLoggedIn()" ng-click="addToMeHabit(s.name)">Add</button>
+            </td>
+        </tbody>
+    </table>
+</div>

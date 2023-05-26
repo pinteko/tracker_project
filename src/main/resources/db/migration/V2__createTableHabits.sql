@@ -1,0 +1,11 @@
+create table if not exists habits ( id bigserial not null,
+                                    name varchar(30) not null UNIQUE,
+                                    user_id integer not null references users(id),
+                                    tag varchar(30),
+                                    max_quantity integer,
+                                    frequency varchar(50),
+                                    current_quantity integer,
+                                    date_start timestamp(0),
+                                    date_done timestamp(0),
+                                    done bit,
+                                    primary key (id));

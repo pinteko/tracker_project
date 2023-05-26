@@ -7,7 +7,7 @@ angular.module('tracker-front').controller('registrationController', function ($
         console.log($scope.newUser);
         $http.post(contextPath + 'registration', $scope.newUser)
             .then(function (response) {
-                window.location.href = contextPath + 'habit.html';
+                window.location.href = contextPath + '#!/habits';
             });
     };
 });
